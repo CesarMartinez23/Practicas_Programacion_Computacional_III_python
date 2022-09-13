@@ -11,6 +11,10 @@ def validationAge():
             print("Please enter a valid year\n")
             print("Invalid Date.\n")
             continue
+        elif(yearOfBirth >= YEAR):
+            print("Please enter a valid year\n")
+            print("Invalid Date.\n")
+            continue
         else:
             age = YEAR - yearOfBirth
             break
