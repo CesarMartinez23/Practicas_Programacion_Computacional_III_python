@@ -41,7 +41,7 @@ def discount(optionSelected, total):
         message = f"Su total es: $ {total} y se le aplicara un descuento de $ {total - totalBuy} , su total a pagar es de $ {totalBuy}"
     elif optionSelected == 2:
         totalBuy = total
-        message = f"Su total a pagar es de $ {total}"
+        message = f"No aplica descuento. Su total a pagar es de $ {total}"
     else:
         message = "Seleccione una opción de pago."
     return message
