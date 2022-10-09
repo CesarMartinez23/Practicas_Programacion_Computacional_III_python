@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
 from src.email import Email
 from src.templates.mail_template import email_template
-from tkinter import Button, Label, Entry, Text, Tk
+from tkinter import Button, Label, Entry, Text, Tk, messagebox
 
 # Instance of Tkinter
 root = Tk()
@@ -29,18 +29,30 @@ textEmailBody = Text(root, bg='#BBDDDF', font=14)
 # Load environment variables from .env file
 load_dotenv()
 
+# Create a function to empty the fields of the GUI form Tkinter
+def emptyFields():
+    entryEmailSend.delete(0, 'end')
+    entryUsername.delete(0, 'end')
+    entryTitleEmail.delete(0, 'end')
+    textEmailBody.delete('1.0', 'end')
+
 # Create a fuction with an instance of Email class and send email with the data from the GUI form Tkinter
 
-
 def main():
-    email = Email()
-    sendTo = entryEmailSend.get()
-    emailTitle = entryTitleEmail.get()
-    username = entryUsername.get()
-    emailBody = textEmailBody.get('1.0', 'end-1c')
-    email.sendEmail([sendTo], emailTitle, message_format=email_template.format(
+    
+    if(entryEmailSend.get() == '' or entryUsername.get() == '' or entryTitleEmail.get() == '' or textEmailBody.get('1.0', 'end-1c') == ''):
+        messagebox.showerror('Error', 'Please fill all the fields.')
+    else:
+        email = Email()
+        sendTo = entryEmailSend.get()
+        emailTitle = entryTitleEmail.get()
+        username = entryUsername.get()
+        emailBody = textEmailBody.get('1.0', 'end-1c')
+        email.sendEmail([sendTo], emailTitle, message_format=email_template.format(
         username, emailBody), format='html')
-
+        
+        messagebox.showinfo('Success', 'Email sent successfully.')
+        emptyFields()
 
 # Button to send email
 buttonSendMail = Button(root, text='Send Email',
@@ -54,7 +66,7 @@ labelUsername.place(x=30, y=75)
 entryUsername.place(x=135, y=75, width=300)
 
 labelTitleEmail.place(x=10, y=150)
-entryTitleEmail.place(x=110, y=150, width=325)
+entryTitleEmail.place(x=115, y=150, width=320)
 
 labelEmailBody.place(x=10, y=200)
 textEmailBody.place(x=10, y=240, width=450, height=200)
